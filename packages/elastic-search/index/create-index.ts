@@ -1,8 +1,9 @@
-import { elasticsearch } from "../elasticsearch.client";
+import { getElasticsearchClient } from "../elasticsearch.client";
 import { PRODUCT_INDEX, productIndexSettings } from "./product.index";
 
 export async function createProductIndex() {
-    const exists = await elasticsearch.indices.exists({
+    const es = getElasticsearchClient();
+    const exists = await es.indices.exists({
         index: PRODUCT_INDEX,
     });
 
@@ -11,7 +12,7 @@ export async function createProductIndex() {
         return;
     }
 
-    await elasticsearch.indices.create({
+    await es.indices.create({
         index: PRODUCT_INDEX,
         settings: productIndexSettings.settings,
         mappings: productIndexSettings.mappings,

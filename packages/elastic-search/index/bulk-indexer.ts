@@ -1,5 +1,5 @@
 import { prisma } from "../../prisma/prisma.client";
-import { elasticsearch } from "../elasticsearch.client";
+import { getElasticsearchClient } from "../elasticsearch.client";
 import { PRODUCT_INDEX } from "../index/product.index";
 import type { Product } from "@prisma/client";
 
@@ -7,6 +7,7 @@ const BATCH_SIZE = 1000;
 
 export async function bulkIndexProducts() {
     let cursor: string | undefined = undefined;
+    const es = getElasticsearchClient();
 
     while (true) {
         const products: Product[] = await prisma.product.findMany({
@@ -25,7 +26,7 @@ export async function bulkIndexProducts() {
             },
         ]);
 
-        await elasticsearch.bulk({
+        await es.bulk({
             refresh: false,
             body,
         });

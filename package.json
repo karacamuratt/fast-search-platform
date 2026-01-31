@@ -18,9 +18,12 @@
     },
     "dependencies": {
         "@elastic/elasticsearch": "8.12.2",
+        "@nestjs/config": "^4.0.2",
+        "@nestjs/terminus": "^11.0.0",
         "@prisma/adapter-pg": "^7.3.0",
         "@prisma/client": "^7.3.0",
         "dotenv": "^17.2.3",
+        "ioredis": "^5.9.2",
         "pg": "^8.17.2"
     }
 }
