@@ -1,0 +1,26 @@
+{
+    "name": "fast-search-platform",
+    "private": true,
+    "scripts": {
+        "infra:up": "docker compose -f packages/infra/docker-compose.yml up -d",
+        "infra:down": "docker compose -f packages/infra/docker-compose.yml down",
+        "prisma:generate": "prisma generate",
+        "prisma:migrate": "prisma migrate dev",
+        "seed": "node -r dotenv/config -r ts-node/register prisma/seed.ts",
+        "es:index": "node -r dotenv/config -r ts-node/register scripts/index-products.ts"
+    },
+    "devDependencies": {
+        "@types/node": "^25.1.0",
+        "@types/pg": "^8.16.0",
+        "prisma": "^7.3.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "@elastic/elasticsearch": "8.12.2",
+        "@prisma/adapter-pg": "^7.3.0",
+        "@prisma/client": "^7.3.0",
+        "dotenv": "^17.2.3",
+        "pg": "^8.17.2"
+    }
+}
