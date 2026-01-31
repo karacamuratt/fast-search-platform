@@ -2,8 +2,8 @@
     "name": "fast-search-platform",
     "private": true,
     "scripts": {
-        "infra:up": "docker compose -f packages/infra/docker-compose.yml up -d",
-        "infra:down": "docker compose -f packages/infra/docker-compose.yml down",
+        "infra:up": "docker compose -f docker-compose.yml up -d",
+        "infra:down": "docker compose -f docker-compose.yml down",
         "prisma:generate": "prisma generate",
         "prisma:migrate": "prisma migrate dev",
         "seed": "node -r dotenv/config -r ts-node/register prisma/seed.ts",

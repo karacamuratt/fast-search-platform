@@ -1,8 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { getElasticsearchClient } from "../../../../packages/elastic-search/elasticsearch.client";
-import { redis } from "../../../../packages/redis/redis.client";
-import { PRODUCT_INDEX } from "../../../../packages/elastic-search/index/product.index";
-
+import { getElasticsearchClient } from "../../src/infra/elastic-search/elasticsearch.client";
+import { redis } from "../infra/redis/redis.client";
+import { PRODUCT_INDEX } from "../infra/elastic-search/index/product.index";
 @Injectable()
 export class SearchService {
     async searchProducts(params: {

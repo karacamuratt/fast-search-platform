@@ -3,7 +3,7 @@ import {
     ExecutionContext,
     Injectable
 } from "@nestjs/common";
-import { redis } from "../../../../../packages/redis/redis.client";
+import { redis } from "../../infra/redis/redis.client";
 
 @Injectable()
 export class RateLimitGuard implements CanActivate {

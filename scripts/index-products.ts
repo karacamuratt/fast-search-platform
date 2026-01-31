@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { createProductIndex } from "../packages/elastic-search/index/create-index";
-import { bulkIndexProducts } from "../packages/elastic-search/index/bulk-indexer";
+import { createProductIndex } from "../apps/api/src/infra/elastic-search/index/create-index";
+import { bulkIndexProducts } from "../apps/api/src/infra/elastic-search/index/bulk-indexer";
 
 async function main() {
     await createProductIndex();

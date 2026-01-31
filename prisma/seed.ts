@@ -1,4 +1,4 @@
-import { prisma } from "../packages/prisma/prisma.client";
+import { prisma } from "./prisma.client";
 import crypto from "node:crypto";
 
 const BATCH_SIZE = 5000;

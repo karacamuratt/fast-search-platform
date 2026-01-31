@@ -1,0 +1,156 @@
+{
+    "info": {
+        "name": "Fast Search Platform API",
+        "description": "Production-grade search API using NestJS, Elasticsearch, Redis and cursor-based pagination.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health",
+            "item": [
+                {
+                    "name": "API Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/health",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "health"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Search",
+            "item": [
+                {
+                    "name": "Search Products (Basic)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/search?q={{searchQuery}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "{{searchQuery}}"
+                                }
+                            ]
+                        }
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "pm.test(\"Status code is 200\", function () {",
+                                    "    pm.response.to.have.status(200);",
+                                    "});",
+                                    "",
+                                    "pm.test(\"Response has items\", function () {",
+                                    "    const json = pm.response.json();",
+                                    "    pm.expect(json.items).to.be.an('array');",
+                                    "});"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Search Products (With Filters)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/search?q={{searchQuery}}&category={{category}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&size={{pageSize}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "{{searchQuery}}"
+                                },
+                                {
+                                    "key": "category",
+                                    "value": "{{category}}"
+                                },
+                                {
+                                    "key": "minPrice",
+                                    "value": "{{minPrice}}"
+                                },
+                                {
+                                    "key": "maxPrice",
+                                    "value": "{{maxPrice}}"
+                                },
+                                {
+                                    "key": "size",
+                                    "value": "{{pageSize}}"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Search Products (Pagination - search_after)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/search?q={{searchQuery}}&size={{pageSize}}&searchAfter={{searchAfter}}",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "q",
+                                    "value": "{{searchQuery}}"
+                                },
+                                {
+                                    "key": "size",
+                                    "value": "{{pageSize}}"
+                                },
+                                {
+                                    "key": "searchAfter",
+                                    "value": "{{searchAfter}}"
+                                }
+                            ]
+                        }
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "const json = pm.response.json();",
+                                    "",
+                                    "if (json.nextSearchAfter) {",
+                                    "    pm.environment.set(\"searchAfter\", JSON.stringify(json.nextSearchAfter));",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

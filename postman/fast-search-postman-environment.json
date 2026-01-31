@@ -1,0 +1,51 @@
+{
+    "id": "fast-search-platform-local-env",
+    "name": "Fast Search Platform - Local",
+    "values": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "searchQuery",
+            "value": "iphone",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "category",
+            "value": "phone",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "minPrice",
+            "value": "500",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "maxPrice",
+            "value": "3000",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "pageSize",
+            "value": "20",
+            "type": "default",
+            "enabled": true
+        },
+        {
+            "key": "searchAfter",
+            "value": "",
+            "type": "default",
+            "enabled": true
+        }
+    ],
+    "_postman_variable_scope": "environment",
+    "_postman_exported_at": "2026-01-31T10:00:00.000Z",
+    "_postman_exported_using": "Postman"
+}

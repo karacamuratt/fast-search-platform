@@ -1,16 +1,5 @@
 {
-    "compilerOptions": {
-        "target": "ES2021",
-        "module": "CommonJS",
-        "moduleResolution": "node",
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "types": [
-            "node"
-        ]
-    },
+    "extends": "./tsconfig.base.json",
     "include": [
         "prisma/**/*.ts",
         "apps/**/*.ts"

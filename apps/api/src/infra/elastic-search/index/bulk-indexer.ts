@@ -1,6 +1,6 @@
-import { prisma } from "../../prisma/prisma.client";
+import { prisma } from "../../../../../../prisma/prisma.client";
 import { getElasticsearchClient } from "../elasticsearch.client";
-import { PRODUCT_INDEX } from "../index/product.index";
+import { PRODUCT_INDEX } from "./product.index";
 import type { Product } from "@prisma/client";
 
 const BATCH_SIZE = 1000;
