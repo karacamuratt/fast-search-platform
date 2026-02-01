@@ -1,5 +1,6 @@
-import { Controller, Get, Query } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { SearchService } from "./search.service";
+import { publishReindexEvent } from "./search.producer";
 
 @Controller("search")
 export class SearchController {
@@ -22,5 +23,15 @@ export class SearchController {
             size: size ? Number(size) : undefined,
             searchAfter: searchAfter ? JSON.parse(searchAfter) : undefined,
         });
+    }
+
+    @Post("reindex/:id")
+    async reindexProduct(@Param("id") id: string) {
+        console.log(`Queueing reindex for product ID ${id}`);
+        await publishReindexEvent(id);
+        return {
+            status: "queued",
+            productId: id,
+        };
     }
 }
