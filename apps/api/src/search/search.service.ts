@@ -18,7 +18,11 @@ export class SearchService {
         const cached = await redis.get(cacheKey);
 
         if (cached) {
-            return JSON.parse(cached);
+            console.log("Cache hit for key:", cacheKey);
+            return {
+                source: "cache",
+                ...JSON.parse(cached),
+            };
         }
 
         // ES QUERY
@@ -76,9 +80,13 @@ export class SearchService {
                     : null,
         };
 
-        // CACHE SET (TTL 30s)
-        await redis.setex(cacheKey, 30, JSON.stringify(result));
+        // CACHE SET (TTL 60s)
+        console.log("Cache miss for key:", cacheKey);
+        await redis.set(cacheKey, JSON.stringify(result), "EX", 60);
 
-        return result;
+        return {
+            source: "elasticsearch",
+            ...result,
+        };
     }
 }
