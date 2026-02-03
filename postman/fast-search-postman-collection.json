@@ -1,156 +1,203 @@
 {
-    "info": {
-        "name": "Fast Search Platform API",
-        "description": "Production-grade search API using NestJS, Elasticsearch, Redis and cursor-based pagination.",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-    },
-    "item": [
+  "info": {
+    "_postman_id": "e123dafb-fc68-492f-9c7d-cf95275c813f",
+    "name": "Fast Search Platform API",
+    "description": "Production-grade search API using NestJS, Elasticsearch, Redis and cursor-based pagination.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "2753594",
+    "_collection_link": "https://go.postman.co/collection/2753594-e123dafb-fc68-492f-9c7d-cf95275c813f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
         {
-            "name": "Health",
-            "item": [
+          "name": "API Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Search Products (Basic)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has items\", function () {",
+                  "    const json = pm.response.json();",
+                  "    pm.expect(json.items).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/search?q={{searchQuery}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
                 {
-                    "name": "API Health Check",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{baseUrl}}/health",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "health"
-                            ]
-                        }
-                    }
+                  "key": "q",
+                  "value": "{{searchQuery}}"
                 }
-            ]
+              ]
+            }
+          },
+          "response": []
         },
         {
-            "name": "Search",
-            "item": [
+          "name": "Search Products (With Filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/search?q={{searchQuery}}&category={{category}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&size={{pageSize}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
                 {
-                    "name": "Search Products (Basic)",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{baseUrl}}/search?q={{searchQuery}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "search"
-                            ],
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "{{searchQuery}}"
-                                }
-                            ]
-                        }
-                    },
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "pm.test(\"Status code is 200\", function () {",
-                                    "    pm.response.to.have.status(200);",
-                                    "});",
-                                    "",
-                                    "pm.test(\"Response has items\", function () {",
-                                    "    const json = pm.response.json();",
-                                    "    pm.expect(json.items).to.be.an('array');",
-                                    "});"
-                                ]
-                            }
-                        }
-                    ]
+                  "key": "q",
+                  "value": "{{searchQuery}}"
                 },
                 {
-                    "name": "Search Products (With Filters)",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{baseUrl}}/search?q={{searchQuery}}&category={{category}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&size={{pageSize}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "search"
-                            ],
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "{{searchQuery}}"
-                                },
-                                {
-                                    "key": "category",
-                                    "value": "{{category}}"
-                                },
-                                {
-                                    "key": "minPrice",
-                                    "value": "{{minPrice}}"
-                                },
-                                {
-                                    "key": "maxPrice",
-                                    "value": "{{maxPrice}}"
-                                },
-                                {
-                                    "key": "size",
-                                    "value": "{{pageSize}}"
-                                }
-                            ]
-                        }
-                    }
+                  "key": "category",
+                  "value": "{{category}}"
                 },
                 {
-                    "name": "Search Products (Pagination - search_after)",
-                    "request": {
-                        "method": "GET",
-                        "header": [],
-                        "url": {
-                            "raw": "{{baseUrl}}/search?q={{searchQuery}}&size={{pageSize}}&searchAfter={{searchAfter}}",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "search"
-                            ],
-                            "query": [
-                                {
-                                    "key": "q",
-                                    "value": "{{searchQuery}}"
-                                },
-                                {
-                                    "key": "size",
-                                    "value": "{{pageSize}}"
-                                },
-                                {
-                                    "key": "searchAfter",
-                                    "value": "{{searchAfter}}"
-                                }
-                            ]
-                        }
-                    },
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "const json = pm.response.json();",
-                                    "",
-                                    "if (json.nextSearchAfter) {",
-                                    "    pm.environment.set(\"searchAfter\", JSON.stringify(json.nextSearchAfter));",
-                                    "}"
-                                ]
-                            }
-                        }
-                    ]
+                  "key": "minPrice",
+                  "value": "{{minPrice}}"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "{{maxPrice}}"
+                },
+                {
+                  "key": "size",
+                  "value": "{{pageSize}}"
                 }
-            ]
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Products (Pagination - search_after)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "",
+                  "if (json.nextSearchAfter) {",
+                  "    pm.environment.set(\"searchAfter\", JSON.stringify(json.nextSearchAfter));",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/search?q={{searchQuery}}&size={{pageSize}}&searchAfter={{searchAfter}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "{{searchQuery}}"
+                },
+                {
+                  "key": "size",
+                  "value": "{{pageSize}}"
+                },
+                {
+                  "key": "searchAfter",
+                  "value": "{{searchAfter}}"
+                }
+              ]
+            }
+          },
+          "response": []
         }
-    ]
+      ]
+    },
+    {
+      "name": "Reindex",
+      "item": [
+        {
+          "name": "ReIndex - ES - Product ID",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/search/reindex/2dedaaca-a5ba-4cc2-9805-71268b9d08bc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "search",
+                "reindex",
+                "2dedaaca-a5ba-4cc2-9805-71268b9d08bc"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
