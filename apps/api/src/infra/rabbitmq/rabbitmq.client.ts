@@ -1,22 +1,28 @@
-import * as amqp from "amqplib/callback_api";
+import amqp from "amqplib";
 
-let channel: amqp.Channel | null = null;
+let connection: any = null;
+let channel: any = null;
 
-export function getRabbitChannel(): Promise<amqp.Channel> {
-    if (channel) {
-        return Promise.resolve(channel);
-    }
+export async function getRabbitChannel() {
+    if (channel) return channel;
 
-    return new Promise((resolve, reject) => {
-        amqp.connect("amqp://localhost", (err, connection) => {
-            if (err) return reject(err);
+    const url =
+        process.env.RABBITMQ_URL ||
+        "amqp://localhost:5672";
 
-            connection.createChannel((err, ch) => {
-                if (err) return reject(err);
+    connection = await amqp.connect(url);
 
-                channel = ch;
-                resolve(ch);
-            });
-        });
+    channel = await connection.createChannel();
+
+    connection.on("close", () => {
+        console.error("RabbitMQ connection closed");
+        connection = null;
+        channel = null;
     });
+
+    connection.on("error", (err: any) => {
+        console.error("RabbitMQ error", err);
+    });
+
+    return channel;
 }
